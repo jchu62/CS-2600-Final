@@ -47,6 +47,7 @@ void die(const char *s)
   perror(s);
   exit(1);
 }
+
 void disableRawMode() 
 {
   if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &E.orig_termios) == -1)
@@ -375,6 +376,7 @@ void initEditor()
 int main() 
 {
   enableRawMode();
+  initEditor();
   
   while (1)
   {
