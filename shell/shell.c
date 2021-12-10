@@ -8,7 +8,7 @@ int lsh_cd(char **args);
 int lsh_help(char **args);
 int lsh_exit(char **args);
 
-char *bultin_str[] = 
+char *builtin_str[] = 
 {
   "cd", 
   "help", 
