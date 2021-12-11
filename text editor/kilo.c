@@ -347,7 +347,11 @@ void abFree(struct abuf *ab)
 
 void editorScroll()
 {
-  E.rx = E.cx;
+  E.rx = 0;
+  if (E.cy < E.numrows)
+  {
+    E.rx = editorRowCxToRx(&E.row[E.cy], E.cx);
+  }
 
   if (E.cy < E.rowoff)
   {
@@ -515,6 +519,19 @@ void editorProcessKeypress()
     case PAGE_UP:
     case PAGE_DOWN:
       {
+        if (c == PAGE_UP)
+        {
+          E.cy = E.rowoff;
+        }
+        else if (c == PAGE_DOWN)
+        {
+          E.cy = E.rowoff + E.screenrows - 1;
+          if (E.cy > E.numrows)
+          {
+            E.cy = E.numrows;
+          }
+        }
+
         int times = E.screenrows;
         while (times--)
         {
