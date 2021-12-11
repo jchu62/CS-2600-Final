@@ -419,10 +419,8 @@ void editorDrawRows(struct abuf *ab)
       abAppend(ab, &E.row[filerow].render[E.coloff], len);
     }
     abAppend(ab, "\x1b[K", 3);
-    if (y < E.screenrows - 1) {
       abAppend(ab, "\r\n", 2);
     }
-  }
 }
 void editorRefreshScreen()
 {
@@ -513,7 +511,10 @@ void editorProcessKeypress()
       break;
     
     case END_KEY:
-      E.cx = E.screencols - 1;
+      if (E.cy < E.numrows)
+      {
+        E.cx = E.row[E.cy].size;
+      }
       break;
     
     case PAGE_UP:
@@ -562,6 +563,7 @@ void initEditor()
   {
     die("getWindowSize");
   }
+  E.screenrows -= 1;
 }
 
 int main(int argc, char *argv[]) 
